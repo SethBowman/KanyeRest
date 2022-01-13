@@ -9,26 +9,41 @@ namespace KanyeRest
         public static void ChooseQuote()
         {
             var client = InitializeHttpClient();
+            string cont = "yes";
 
-            Console.WriteLine("Would you like to get a quote from Kanye West or Ron Swanson?\n(Type 'Kanye' or 'Ron')");
-            var response = Console.ReadLine().ToLower();
-
-            while (response != "kanye" && response != "ron")
+            while (cont == "yes")
             {
-                Console.WriteLine("That was not an option, try again.\n(Type 'Kanye' or 'Ron')");
-                response = Console.ReadLine().ToLower();
+                Console.WriteLine("Would you like to get a quote from Kanye West or Ron Swanson?\n(Type 'Kanye' or 'Ron')");
+                var response = Console.ReadLine().ToLower();
+
+                while (response != "kanye" && response != "ron")
+                {
+                    Console.WriteLine("That was not an option, try again.\n(Type 'Kanye' or 'Ron')");
+                    response = Console.ReadLine().ToLower();
+                }
+
+                if (response == "kanye")
+                {
+                    Console.WriteLine("Kanye:");
+                    Console.WriteLine(GetKanyeQuote(client));
+                }
+                else
+                {
+                    Console.WriteLine("Ron:");
+                    Console.WriteLine(GetSwansonQuote(client));
+                }
+
+                Console.WriteLine("Would you like to continue?\n(Type 'yes' or 'no')");
+                cont = Console.ReadLine().ToLower();
+                while(cont != "yes" && cont != "no")
+                {
+                    Console.WriteLine("That was not an option, try again.\n(Type 'yes' or 'no') ");
+                    cont = Console.ReadLine();
+                }
+
+
             }
 
-            if (response == "kanye")
-            {
-                Console.WriteLine("Kanye:");
-                Console.WriteLine(GetKanyeQuote(client));
-            }
-            else
-            {
-                Console.WriteLine("Ron:");
-                Console.WriteLine(GetSwansonQuote(client));
-            }
         }
 
         private static string GetSwansonQuote(HttpClient client)
